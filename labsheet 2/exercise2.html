@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Audio & Video Players</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .media-section { margin: 40px 0; }
+        .media-section h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        audio, video { width: 100%; max-width: 600px; margin: 10px 0; }
+        .time-display { font-size: 18px; color: #666; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>HTML5 Multimedia Players</h1>
+    
+    <!-- Audio Player Section -->
+    <div class="media-section">
+        <h2>🎵 Audio Player</h2>
+        <audio id="audioPlayer" controls preload="metadata" loop>
+            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="time-display">
+            Current Time: <span id="audioTime">00:00</span> / 
+            <span id="audioDuration">--:--</span>
+        </div>
+    </div>
+
+    <!-- Video Player Section -->
+    <div class="media-section">
+        <h2>🎥 Video Player</h2>
+        <video id="videoPlayer" width="600" height="340" controls preload="metadata" 
+               poster="https://via.placeholder.com/600x340/007bff/ffffff?text=Video+Loading...">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support the video element.
+        </video>
+        <div class="time-display">
+            Current Time: <span id="videoTime">00:00</span> / 
+            <span id="videoDuration">--:--</span>
+        </div>
+    </div>
+
+    <script src="exercise2.js"></script>
+</body>
+</html>
