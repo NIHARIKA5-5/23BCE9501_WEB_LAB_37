@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 20px;
+}
+
+/* Page heading */
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Survey form box */
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  width: 60%;
+  margin: auto;
+  border: 1px solid #ccc;
+}
+
+/* Each question block */
+.question {
+  margin-bottom: 18px;
+}
+
+/* Question label */
+.question label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Text input */
+input[type="text"] {
+  width: 60%;
+  padding: 6px;
+  border: 1px solid #999;
+}
+
+/* Radio & checkbox spacing */
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+/* Error message */
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Submit button */
+button {
+  padding: 8px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Button hover */
+button:hover {
+  background-color: #45a049;
+}

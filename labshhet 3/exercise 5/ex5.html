@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multi-Stage Form</title>
+  <link rel="stylesheet" href="ex5.css">
+</head>
+
+<body>
+
+<h2>Multi-Stage Registration Form</h2>
+
+<!-- Progress Bar -->
+<div class="progress-container">
+  <div id="progressBar"></div>
+</div>
+
+<form id="multiForm">
+
+  <!-- Stage 1 -->
+  <div class="stage active">
+    <h3>Stage 1: Personal Details</h3>
+    <input type="text" id="name" placeholder="Enter Name">
+    <span class="error" id="nameError"></span>
+    <button type="button" onclick="nextStage()">Next</button>
+  </div>
+
+  <!-- Stage 2 -->
+  <div class="stage">
+    <h3>Stage 2: Contact Details</h3>
+    <input type="email" id="email" placeholder="Enter Email">
+    <span class="error" id="emailError"></span>
+    <button type="button" onclick="prevStage()">Back</button>
+    <button type="button" onclick="nextStage()">Next</button>
+  </div>
+
+  <!-- Stage 3 -->
+  <div class="stage">
+    <h3>Stage 3: Password</h3>
+    <input type="password" id="password" placeholder="Enter Password">
+    <span class="error" id="passwordError"></span>
+    <button type="button" onclick="prevStage()">Back</button>
+    <button type="button" onclick="nextStage()">Next</button>
+  </div>
+
+  <!-- Stage 4 -->
+ <div class="stage">
+  <h3>Stage 4: Review Details</h3>
+
+  <p><strong>Name:</strong> <span id="reviewName"></span></p>
+  <p><strong>Email:</strong> <span id="reviewEmail"></span></p>
+  <p><strong>Password:</strong> <span id="reviewPassword"></span></p>
+
+  <button type="button" onclick="prevStage()">Back</button>
+  <button type="submit">Submit</button>
+</div>
+
+
+</form>
+
+<script src="ex5.js"></script>
+</body>
+</html>

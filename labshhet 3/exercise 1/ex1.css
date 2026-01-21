@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f2ff;   /* page background */
+}
+
+/* Form container */
+form {
+    width: 350px;
+    margin: 60px auto;
+    background-color: #ffffff;  /* form background */
+    padding: 25px;
+    border-radius: 10px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+/* Inputs and dropdown */
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #777;
+    border-radius: 4px;
+}
+
+/* Error messages */
+.message {
+    color: red;
+    font-size: 12px;
+}
+
+/* Skills field hidden by default */
+#skillsField {
+    display: none;
+}
+
+/* Register button */
+input[type="submit"] {
+    margin-top: 20px;
+    background-color: #4CAF50;   /* green button */
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Hover effect */
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
