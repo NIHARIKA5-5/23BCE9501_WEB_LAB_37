@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="ex3.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-graduation-cap"></i> Student Management</h1>
+            <div id="message" class="message hidden"></div>
+        </header>
+
+        <!-- Student Form -->
+        <div class="form-section">
+            <form id="studentForm">
+                <input type="hidden" id="studentId" value="">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="number" id="studentIdInput" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="studentName" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Marks</label>
+                        <input type="number" id="marks" required min="0" max="100">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn">
+                        <i class="fas fa-plus"></i> Add Student
+                    </button>
+                    <button type="button" id="clearBtn">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Students Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Students List <span id="studentsCount">(0)</span></h2>
+                <button id="refreshBtn" class="btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <div id="loadingSpinner" class="loading hidden">
+                <i class="fas fa-spinner fa-spin"></i> Loading students...
+            </div>
+            
+            <div id="tableContainer">
+                <table id="studentsTable" class="hidden">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Marks</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="ex3.js"></script>
+</body>
+</html>

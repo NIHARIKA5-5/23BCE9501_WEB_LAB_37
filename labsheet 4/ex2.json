@@ -1,0 +1,46 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "MacBook Pro 14-inch M3",
+            "price": 199999,
+            "category": "Laptop"
+        },
+        {
+            "id": 2,
+            "name": "iPhone 15 Pro Max",
+            "price": 159999,
+            "category": "Smartphone"
+        },
+        {
+            "id": 3,
+            "name": "AirPods Pro 2nd Gen",
+            "price": 24900,
+            "category": "Headphones"
+        },
+        {
+            "id": 4,
+            "name": "Nike Air Max 90",
+            "price": 12999,
+            "category": "Shoes"
+        },
+        {
+            "id": 5,
+            "name": "Samsung 55-inch QLED TV",
+            "price": 89999,
+            "category": "Television"
+        },
+        {
+            "id": 6,
+            "name": "Dell XPS 13",
+            "price": 124999,
+            "category": "Laptop"
+        },
+        {
+            "id": 7,
+            "name": "Sony WH-1000XM5",
+            "price": 34999,
+            "category": "Headphones"
+        }
+    ]
+}
