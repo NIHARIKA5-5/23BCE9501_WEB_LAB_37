@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Record System (JSON)</title>
+    <style>
+        .container { max-width: 900px; margin: 20px auto; font-family: Arial, sans-serif; }
+        input { margin: 4px; padding: 6px; }
+        button { margin: 4px; padding: 6px 10px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .success { background: #d4edda; color: #155724; padding: 8px; margin: 8px 0; }
+        .error { background: #f8d7da; color: #721c24; padding: 8px; margin: 8px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Student Record System (JSON)</h1>
+    <div id="msg"></div>
+
+    <div>
+        <h3>Add / Update Student</h3>
+        <input type="text" id="stuId" placeholder="ID">
+        <input type="text" id="stuName" placeholder="Name">
+        <input type="text" id="stuCourse" placeholder="Course">
+        <input type="number" id="stuMarks" placeholder="Marks" min="0" max="100">
+        <button onclick="saveStudent()">Save</button>
+        <button onclick="clearStudentForm()">Clear</button>
+    </div>
+
+    <h3>Students</h3>
+    <button onclick="loadStudents()">Reload JSON</button>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Course</th><th>Marks</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="stuTableBody"></tbody>
+    </table>
+</div>
+
+<script>
+    let students = [];
+
+    function showMsg(text, type) {
+        const msg = document.getElementById('msg');
+        msg.className = type;
+        msg.textContent = text;
+        if (text) {
+            setTimeout(() => { msg.textContent = ''; msg.className = ''; }, 3000);
+        }
+    }
+
+    async function loadStudents() {
+        try {
+            const res = await fetch('ex3.json?t=' + Date.now());
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            students = await res.json();  // response.json() here
+            renderStudents();
+            showMsg('Students loaded successfully', 'success');
+        } catch (e) {
+            showMsg('Error loading JSON: ' + e.message, 'error');
+        }
+    }
+
+    function renderStudents() {
+        const tbody = document.getElementById('stuTableBody');
+        tbody.innerHTML = '';
+
+        if (!Array.isArray(students) || students.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5">No students found</td></tr>';
+            return;
+        }
+
+        students.forEach(stu => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${stu.id}</td>
+                <td>${stu.name}</td>
+                <td>${stu.course}</td>
+                <td>${stu.marks}</td>
+                <td>
+                    <button onclick="editStudent('${stu.id}')">Edit</button>
+                    <button onclick="deleteStudent('${stu.id}')">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function clearStudentForm() {
+        document.getElementById('stuId').value = '';
+        document.getElementById('stuName').value = '';
+        document.getElementById('stuCourse').value = '';
+        document.getElementById('stuMarks').value = '';
+    }
+
+    function validateStudent(id, name, course, marksVal) {
+        if (!id || !name || !course || marksVal === '') {
+            showMsg('All fields are required', 'error');
+            return false;
+        }
+        const marks = Number(marksVal);
+        if (Number.isNaN(marks) || marks < 0 || marks > 100) {
+            showMsg('Marks must be between 0 and 100', 'error');
+            return false;
+        }
+        return true;
+    }
+
+    function saveStudent() {
+        const id = document.getElementById('stuId').value.trim();
+        const name = document.getElementById('stuName').value.trim();
+        const course = document.getElementById('stuCourse').value.trim();
+        const marksVal = document.getElementById('stuMarks').value;
+
+        if (!validateStudent(id, name, course, marksVal)) return;
+
+        const marks = Number(marksVal);
+        const existingIndex = students.findIndex(s => s.id === id);
+
+        if (existingIndex >= 0) {
+            students[existingIndex] = { id, name, course, marks };
+            showMsg('Student updated (in memory only)', 'success');
+        } else {
+            students.push({ id, name, course, marks });
+            showMsg('Student added (in memory only)', 'success');
+        }
+
+        renderStudents();
+        clearStudentForm();
+    }
+
+    function editStudent(id) {
+        const stu = students.find(s => s.id === id);
+        if (!stu) {
+            showMsg('Student not found', 'error');
+            return;
+        }
+        document.getElementById('stuId').value = stu.id;
+        document.getElementById('stuName').value = stu.name;
+        document.getElementById('stuCourse').value = stu.course;
+        document.getElementById('stuMarks').value = stu.marks;
+    }
+
+    function deleteStudent(id) {
+        if (!confirm('Delete student ' + id + '?')) return;
+        students = students.filter(s => s.id !== id);
+        renderStudents();
+        showMsg('Student deleted (in memory only)', 'success');
+    }
+
+    loadStudents();
+</script>
+</body>
+</html>
