@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book>
+        <id>B1</id>
+        <title>Clean Code</title>
+        <author>Robert C. Martin</author>
+        <status>Available</status>
+    </book>
+    <book>
+        <id>B2</id>
+        <title>You Don't Know JS</title>
+        <author>Kyle Simpson</author>
+        <status>Issued</status>
+    </book>
+</library>

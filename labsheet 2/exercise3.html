@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Task Board</title>
+    <link rel="stylesheet" href="exercise3.css">
+</head>
+<body>
+    <h1>Advanced Drag and Drop Task Manager</h1>
+    <div class="container">
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Enter task name...">
+            <button id="addTaskBtn">Add Task</button>
+        </div>
+
+        <div class="board">
+            <div class="column" id="todo">
+                <h2>📋 To Do</h2>
+                <div class="task-list" id="todo-list"></div>
+            </div>
+
+            <div class="column" id="progress">
+                <h2>⚙️ In Progress</h2>
+                <div class="task-list" id="progress-list"></div>
+            </div>
+
+            <div class="column" id="completed">
+                <h2>✅ Completed</h2>
+                <div class="task-list" id="completed-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message" id="completionMessage">Task Completed Successfully! 🎉</div>
+
+    <script src="exercise3.js"></script>
+</body>
+</html>

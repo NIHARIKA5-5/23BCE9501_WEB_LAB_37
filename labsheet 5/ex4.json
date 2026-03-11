@@ -1,0 +1,5 @@
+[
+  { "id": "P1", "name": "Mouse", "category": "Electronics", "price": 500, "stock": 25 },
+  { "id": "P2", "name": "Keyboard", "category": "Electronics", "price": 800, "stock": 5 },
+  { "id": "P3", "name": "Notebook", "category": "Stationery", "price": 40, "stock": 100 }
+]

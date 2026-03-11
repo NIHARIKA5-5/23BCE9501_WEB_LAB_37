@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Intelligent Shopping Cart</title>
+  <link rel="stylesheet" href="ex2.css">
+</head>
+
+<body>
+
+<h2>🛒 Intelligent Shopping Cart</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Category</th>
+      <th>Price (₹)</th>
+      <th>Quantity</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody id="cartBody"></tbody>
+</table>
+
+<br>
+
+<label>Coupon Code:</label>
+<input type="text" id="coupon" placeholder="Enter coupon">
+<button onclick="applyCoupon()">Apply</button>
+
+<h3 id="totalPrice" class="total"></h3>
+<p id="discountAmount"></p>
+
+
+<script src="ex2.js"></script>
+</body>
+</html>

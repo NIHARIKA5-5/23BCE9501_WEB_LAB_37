@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System</title>
+    <link rel="stylesheet" href="exercise4.css">
+</head>
+<body>
+    <div class="container">
+        <h1>👥 User Management System</h1>
+        
+        <!-- Registration Form -->
+        <div class="form-section">
+            <h2>Register New User</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Register User</button>
+            </form>
+            <div id="errorMsg" class="error"></div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Registered Users (<span id="userCount">0</span>)</h2>
+                <button id="clearAllBtn">Clear All Users</button>
+            </div>
+            <div class="table-container">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Date Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="exercise4.js"></script>
+</body>
+</html>

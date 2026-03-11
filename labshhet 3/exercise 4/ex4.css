@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eef3f9;   /* light blue background */
+  margin: 20px;
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  color: #1e3a8a;   /* dark blue */
+}
+
+h3 {
+  text-align: center;
+  color: #374151;   /* dark gray */
+}
+
+/* Control buttons section */
+.controls {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+button {
+  padding: 8px 14px;
+  margin: 5px;
+  background-color: #2563eb;  /* blue */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1d4ed8;  /* darker blue */
+}
+
+/* Input field */
+input {
+  padding: 6px;
+  margin: 10px auto;
+  display: block;
+  border: 1px solid #94a3b8;
+}
+
+/* Activity log box */
+#activityLog {
+  background-color: #ffffff;
+  border: 2px solid #2563eb;
+  padding: 10px;
+  height: 220px;
+  overflow-y: auto;
+}
+
+/* Individual log item */
+#activityLog li {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #111827;
+}
+
+/* Warning message */
+#warning {
+  color: #dc2626;   /* red */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}

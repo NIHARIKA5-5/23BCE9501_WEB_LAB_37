@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management - XML CRUD</title>
+    <link rel="stylesheet" href="ex1.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-users"></i> Employee Management</h1>
+            <div id="message" class="message hidden"></div>
+        </header>
+
+        <!-- Employee Form -->
+        <div class="form-section">
+            <form id="employeeForm">
+                <input type="hidden" id="editId" value="">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="number" id="empId" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="empName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Salary</label>
+                        <input type="number" id="salary" required min="30000" max="200000">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </button>
+                    <button type="button" id="clearBtn">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Employees Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Employees <span id="count">(0)</span></h2>
+                <button id="loadBtn" class="btn-secondary">
+                    <i class="fas fa-sync"></i> Load XML
+                </button>
+            </div>
+            <div id="loading" class="loading hidden">Loading employees...</div>
+            <table id="empTable" class="hidden">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="empBody"></tbody>
+            </table>
+            <div id="emptyState" class="empty hidden">
+                <i class="fas fa-users-slash"></i>
+                <p>No employees found. Add some using the form above!</p>
+            </div>
+        </div>
+    </div>
+    <script src="ex1.js"></script>
+</body>
+</html>

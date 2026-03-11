@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Inventory (JSON)</title>
+    <style>
+        .container { max-width: 1000px; margin: 20px auto; font-family: Arial, sans-serif; }
+        input, select { margin: 4px; padding: 6px; }
+        button { margin: 4px; padding: 6px 10px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .success { background: #d4edda; color: #155724; padding: 8px; margin: 8px 0; }
+        .error { background: #f8d7da; color: #721c24; padding: 8px; margin: 8px 0; }
+        .low-stock { background: #fff3cd; } /* conditional formatting row */
+        .summary { margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Product Inventory System (JSON)</h1>
+    <div id="msg"></div>
+
+    <div>
+        <h3>Add / Update Product</h3>
+        <input type="text" id="prodId" placeholder="Product ID">
+        <input type="text" id="prodName" placeholder="Name">
+        <input type="text" id="prodCategory" placeholder="Category">
+        <input type="number" id="prodPrice" placeholder="Price" min="0">
+        <input type="number" id="prodStock" placeholder="Stock Qty" min="0">
+        <button onclick="saveProduct()">Save</button>
+        <button onclick="clearProductForm()">Clear</button>
+    </div>
+
+    <div>
+        <h3>Search by Category</h3>
+        <input type="text" id="searchCategory" placeholder="Category">
+        <button onclick="renderProducts()">Search</button>
+        <button onclick="clearSearch()">Clear Search</button>
+    </div>
+
+    <h3>Inventory</h3>
+    <button onclick="loadInventory()">Reload JSON</button>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="prodTableBody"></tbody>
+    </table>
+    <div id="inventorySummary" class="summary"></div>
+</div>
+
+<script>
+    let inventory = [];
+
+    function showMsg(text, type) {
+        const msg = document.getElementById('msg');
+        msg.className = type;
+        msg.textContent = text;
+        if (text) {
+            setTimeout(() => { msg.textContent = ''; msg.className = ''; }, 3000);
+        }
+    }
+
+    async function loadInventory() {
+        try {
+            const res = await fetch('ex4.json?t=' + Date.now());
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            inventory = await res.json();
+            renderProducts();
+            showMsg('Inventory loaded successfully', 'success');
+        } catch (e) {
+            showMsg('Error loading JSON: ' + e.message, 'error');
+        }
+    }
+
+    function renderProducts() {
+        const tbody = document.getElementById('prodTableBody');
+        const searchCat = document.getElementById('searchCategory').value.trim().toLowerCase();
+        tbody.innerHTML = '';
+
+        let products = Array.isArray(inventory) ? [...inventory] : [];
+        if (searchCat) {
+            products = products.filter(p => p.category.toLowerCase().includes(searchCat));
+        }
+
+        if (products.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6">No products found</td></tr>';
+            document.getElementById('inventorySummary').textContent = '';
+            return;
+        }
+
+        let totalValue = 0;
+
+        products.forEach(prod => {
+            const tr = document.createElement('tr');
+            const isLowStock = prod.stock !== undefined && prod.stock < 10;
+            if (isLowStock) tr.classList.add('low-stock'); // low stock warning
+
+            const value = (Number(prod.price) || 0) * (Number(prod.stock) || 0);
+            totalValue += value;
+
+            tr.innerHTML = `
+                <td>${prod.id}</td>
+                <td>${prod.name}</td>
+                <td>${prod.category}</td>
+                <td>${prod.price}</td>
+                <td>${prod.stock}</td>
+                <td>
+                    <button onclick="editProduct('${prod.id}')">Edit</button>
+                    <button onclick="deleteProduct('${prod.id}')">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('inventorySummary').textContent =
+            'Total inventory value: ₹' + totalValue.toFixed(2);
+    }
+
+    function clearProductForm() {
+        document.getElementById('prodId').value = '';
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodCategory').value = '';
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodStock').value = '';
+    }
+
+    function clearSearch() {
+        document.getElementById('searchCategory').value = '';
+        renderProducts();
+    }
+
+    function validateProduct(id, name, category, priceVal, stockVal) {
+        if (!id || !name || !category || priceVal === '' || stockVal === '') {
+            showMsg('All fields are required', 'error');
+            return false;
+        }
+        const price = Number(priceVal);
+        const stock = Number(stockVal);
+        if (Number.isNaN(price) || price < 0) {
+            showMsg('Price must be >= 0', 'error');
+            return false;
+        }
+        if (Number.isNaN(stock) || stock < 0) {
+            showMsg('Stock must be >= 0', 'error');
+            return false;
+        }
+        return true;
+    }
+
+    function saveProduct() {
+        const id = document.getElementById('prodId').value.trim();
+        const name = document.getElementById('prodName').value.trim();
+        const category = document.getElementById('prodCategory').value.trim();
+        const priceVal = document.getElementById('prodPrice').value;
+        const stockVal = document.getElementById('prodStock').value;
+
+        if (!validateProduct(id, name, category, priceVal, stockVal)) return;
+
+        const price = Number(priceVal);
+        const stock = Number(stockVal);
+
+        const index = inventory.findIndex(p => p.id === id);
+        if (index >= 0) {
+            inventory[index] = { id, name, category, price, stock };
+            showMsg('Product updated (in memory only)', 'success');
+        } else {
+            inventory.push({ id, name, category, price, stock });
+            showMsg('Product added (in memory only)', 'success');
+        }
+        renderProducts();
+        clearProductForm();
+    }
+
+    function editProduct(id) {
+        const prod = inventory.find(p => p.id === id);
+        if (!prod) {
+            showMsg('Product not found', 'error');
+            return;
+        }
+        document.getElementById('prodId').value = prod.id;
+        document.getElementById('prodName').value = prod.name;
+        document.getElementById('prodCategory').value = prod.category;
+        document.getElementById('prodPrice').value = prod.price;
+        document.getElementById('prodStock').value = prod.stock;
+    }
+
+    function deleteProduct(id) {
+        if (!confirm('Delete product ' + id + '?')) return;
+        inventory = inventory.filter(p => p.id !== id);
+        renderProducts();
+        showMsg('Product deleted (in memory only)', 'success');
+    }
+
+    loadInventory();
+</script>
+</body>
+</html>
