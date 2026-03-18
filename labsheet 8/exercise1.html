@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Marks Calculator </title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+        }
+        h2 { color: #2c3e50; margin-bottom: 30px; font-size: 2.2em; }
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white; border: none;
+            padding: 15px 40px; font-size: 1.2em;
+            border-radius: 50px; cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            font-weight: 600; text-transform: uppercase;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(102, 126, 234, 0.6); }
+        #result {
+            margin-top: 30px; padding: 25px;
+            background: linear-gradient(135deg, #f8f9ff, #e8f4f8);
+            border-radius: 15px; border-left: 5px solid #667eea;
+            font-size: 1.3em; line-height: 1.6;
+            color: #2c3e50; font-weight: 500;
+        }
+        #result strong { color: #667eea; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎓 Student Marks Calculator </h2>
+        <button onclick="calculate()">Calculate Marks</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // PURE ES6 FEATURES
+        const calculate = () => {
+            // ES6 Destructuring for marks input
+            const marks = {
+                studentName: prompt("Enter Student Name:"),
+                mark1: Number(prompt("Enter Mark 1 (0-100):")),
+                mark2: Number(prompt("Enter Mark 2 (0-100):")),
+                mark3: Number(prompt("Enter Mark 3 (0-100):"))
+            };
+
+            // ES6 Object Destructuring
+            const { studentName, mark1, mark2, mark3 } = marks;
+
+            // ES6 Input Validation
+            if (!studentName || isNaN(mark1) || isNaN(mark2) || isNaN(mark3)) {
+                alert("Please enter valid data!");
+                return;
+            }
+
+            // ES6 Arrow Functions + Default Parameters
+            const total = (m1, m2, m3) => m1 + m2 + m3;
+            const average = (t) => t / 3;
+
+            // ES6 const for results
+            const totalMarks = total(mark1, mark2, mark3);
+            const avgMarks = average(totalMarks);
+
+            // ES6 Template Literals
+            document.getElementById("result").innerHTML = `
+                <strong>Student Name:</strong> ${studentName} <br>
+                <strong>Total Marks:</strong> ${totalMarks} <br>
+                <strong>Average Marks:</strong> ${avgMarks.toFixed(2)}
+            `;
+        };
+    </script>
+</body>
+</html>

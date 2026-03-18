@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Enrollment System - ES6 Class & Promise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            max-width: 300px;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            margin: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+        }
+
+        button {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(79, 172, 254, 0.6);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #e3f2fd, #f0f8ff);
+            border-radius: 15px;
+            border-left: 5px solid #4facfe;
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-weight: 500;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success { 
+            border-left-color: #27ae60; 
+            background: linear-gradient(135deg, #d5f4e6, #f0f9f0); 
+        }
+        .error { 
+            border-left-color: #e74c3c; 
+            background: linear-gradient(135deg, #fdf2f2, #ffeaea); 
+        }
+
+        .course-info {
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #4facfe;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎓 Course Enrollment System</h2>
+        
+        <div class="input-group">
+            <input type="text" id="courseName" placeholder="Enter Course Name" maxlength="50">
+            <input type="text" id="instructorName" placeholder="Enter Instructor Name" maxlength="50">
+        </div>
+        
+        <button onclick="enroll()">Enroll in Course</button>
+        
+        <div id="courseDisplay"></div>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        class Course {
+            constructor(courseName, instructor) {
+                this.courseName = courseName;
+                this.instructor = instructor;
+            }
+
+            displayCourse() {
+                return `Course: ${this.courseName}, Instructor: ${this.instructor}`;
+            }
+        }
+
+        function enroll() {
+            // Get values from webpage inputs
+            let courseName = document.getElementById("courseName").value.trim();
+            let instructor = document.getElementById("instructorName").value.trim();
+            
+            if (!courseName || !instructor) {
+                showResult("Please enter both course name and instructor!", "error");
+                return;
+            }
+
+            let course1 = new Course(courseName, instructor);
+            let output = course1.displayCourse();
+            
+            // Display course info on webpage
+            document.getElementById("courseDisplay").innerHTML = `
+                <div class="course-info">
+                    <strong>${output}</strong>
+                </div>
+            `;
+
+            // User controls success/failure (for lab demo)
+            let seatsAvailable = confirm("Seats Available? Click OK for Yes, Cancel for No");
+
+            let enrollCourse = new Promise((resolve, reject) => {
+                if (seatsAvailable)
+                    resolve("✅ Enrollment Successful!");
+                else
+                    reject("❌ Course Full - Try Again Later!");
+            });
+
+            enrollCourse
+                .then(msg => {
+                    showResult(`${output} <br><br> <strong style="color: #27ae60;">${msg}</strong>`, "success");
+                })
+                .catch(err => {
+                    showResult(`${output} <br><br> <strong style="color: #e74c3c;">${err}</strong>`, "error");
+                });
+        }
+
+        function showResult(message, className) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = message;
+            resultDiv.className = className;
+        }
+
+        // Clear inputs and results on Enter key press
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                enroll();
+            }
+        });
+    </script>
+</body>
+</html>

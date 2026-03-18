@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        pre { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        form { margin-bottom: 20px; }
+        input, select { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Student Details</h1>
+        
+        <!-- User Input Form -->
+        <form id="studentForm">
+            <div class="input-group">
+                <label>Student ID:</label>
+                <input type="number" id="id" value="101" required>
+            </div>
+            <div class="input-group">
+                <label>Name:</label>
+                <input type="text" id="name" value="Priya" required>
+            </div>
+            <div class="input-group">
+                <label>Department:</label>
+                <select id="department" required>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="MECH">Mechanical</option>
+                    <option value="CIVIL">Civil</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Marks (0-100):</label>
+                <input type="number" id="marks" value="90" min="0" max="100" required>
+            </div>
+            <button type="submit">Generate Student Report</button>
+        </form>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // PURE ES6 FEATURES ONLY
+        
+        // 1. ES6 Arrow Function for Grading
+        const getGrade = (m) => 
+            m >= 90 ? "A" : 
+            m >= 80 ? "B" : 
+            m >= 70 ? "C" : 
+            m >= 60 ? "D" : 
+            m >= 50 ? "E" : "F";
+
+        // 2. Form Submit Handler with ES6 Event Handling
+        document.getElementById('studentForm').addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            // 3. ES6 Object Destructuring from Form Inputs
+            const { id, name, department, marks } = {
+                id: Number(document.getElementById('id').value),
+                name: document.getElementById('name').value,
+                department: document.getElementById('department').value,
+                marks: Number(document.getElementById('marks').value)
+            };
+
+            // 4. ES6 Spread Operator to create updated student
+            const updatedStudent = {
+                ...{ id, name, department, marks },
+                grade: getGrade(marks)
+            };
+
+            // 5. ES6 Template Literals for dynamic output
+            document.getElementById("output").innerHTML = `
+                <h3>Original Student Data:</h3>
+                <pre>${id} ${name} ${department} ${marks}</pre>
+                <h3>Updated with Grade:</h3>
+                <pre>${JSON.stringify(updatedStudent, null, 2)}</pre>
+            `;
+
+            // Console output
+            console.log('Original:', { id, name, department, marks });
+            console.log('Updated:', updatedStudent);
+        });
+    </script>
+</body>
+</html>
