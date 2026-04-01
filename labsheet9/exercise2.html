@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise 2</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function Exercise2() {
+      const [students, setStudents] = React.useState([]);
+      const [input, setInput] = React.useState({
+        name: "",
+        department: "",
+        marks: ""
+      });
+
+      const handleChange = (e) => {
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value
+        });
+      };
+
+      const addStudent = () => {
+        if (!input.name || !input.department || !input.marks) return;
+
+        setStudents([...students, { ...input, id: Date.now() }]);
+        setInput({ name: "", department: "", marks: "" });
+      };
+
+      return (
+        <div>
+          <h2>Student Cards</h2>
+
+          <input name="name" placeholder="Name" value={input.name} onChange={handleChange} />
+          <input name="department" placeholder="Department" value={input.department} onChange={handleChange} />
+          <input name="marks" placeholder="Marks" value={input.marks} onChange={handleChange} />
+
+          <button onClick={addStudent}>Add</button>
+
+          {students.length === 0 ? (
+            <p>No students added</p>
+          ) : (
+            students.map((s) => (
+              <div key={s.id} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
+                <h3>{s.name}</h3>
+                <p>{s.department}</p>
+                <p>{s.marks}</p>
+              </div>
+            ))
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Exercise2 />);
+  </script>
+</body>
+</html>

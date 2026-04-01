@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise 1</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function Exercise1() {
+      const [student, setStudent] = React.useState({
+        name: "",
+        department: "",
+        year: "",
+        section: ""
+      });
+
+      const handleChange = (e) => {
+        setStudent({
+          ...student,
+          [e.target.name]: e.target.value
+        });
+      };
+
+      return (
+        <div>
+          <h2>Student Profile</h2>
+
+          <input name="name" placeholder="Name" onChange={handleChange} /><br />
+          <input name="department" placeholder="Department" onChange={handleChange} /><br />
+          <input name="year" placeholder="Year" onChange={handleChange} /><br />
+          <input name="section" placeholder="Section" onChange={handleChange} />
+
+          <h3>Profile</h3>
+          <p>Name: {student.name}</p>
+          <p>Department: {student.department}</p>
+          <p>Year: {student.year}</p>
+          <p>Section: {student.section}</p>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Exercise1 />);
+  </script>
+</body>
+</html>
