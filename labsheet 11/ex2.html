@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Exercise 2</h2>
+
+<button onclick="writeFile()">Write</button>
+<button onclick="readFile()">Read</button>
+<button onclick="appendFile()">Append</button>
+<button onclick="deleteFile()">Delete</button>
+
+<p id="output"></p>
+
+<script>
+const url = "http://localhost:3001";
+
+function writeFile() {
+    fetch(url + "/write").then(res => res.text()).then(show);
+}
+function readFile() {
+    fetch(url + "/read").then(res => res.text()).then(show);
+}
+function appendFile() {
+    fetch(url + "/append").then(res => res.text()).then(show);
+}
+function deleteFile() {
+    fetch(url + "/delete").then(res => res.text()).then(show);
+}
+
+function show(data) {
+    document.getElementById("output").innerText = data;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Exercise 1</h2>
+
+<button onclick="loadHome()">Home</button>
+<button onclick="loadAbout()">About</button>
+
+<p id="output"></p>
+
+<script>
+function loadHome() {
+    fetch('http://localhost:3000/')
+    .then(res => res.text())
+    .then(data => document.getElementById("output").innerText = data);
+}
+
+function loadAbout() {
+    fetch('http://localhost:3000/about')
+    .then(res => res.text())
+    .then(data => document.getElementById("output").innerText = data);
+}
+</script>
+
+</body>
+</html>
